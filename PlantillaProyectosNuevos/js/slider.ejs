@@ -1,0 +1,29 @@
+<%
+var contenedor = 0;
+var baseURL = "https://tdushots.blob.core.windows.net";
+
+$.each(sliders, function( index, sliderCont ) {
+  contenedor ++;
+  %>
+  <div id="<%= contenedor %>" class="item">
+    <%
+    $.each(sliderCont.Slider, function(index, slider){
+      var link = "#";
+      if (slider.Link == null || slider.Link == ""){
+        link = "./descuentos.html?id=" + slider.IdComercio
+      }else{
+        link = slider.Link;
+      }
+      %>
+      <div class="col-xs-2">
+          <a href="<%= link%>"><img src="<%= baseURL + slider.PathImage%>" alt="<%= slider.Nombre%>" class="img-responsive"></a>
+      </div>
+      <%
+    });
+    %>
+  </div>
+
+<%
+});
+
+%>

@@ -1,0 +1,83 @@
+<div class="col-md-12 col-xs-12 main-desktop-promociones">
+    <div class="main-promociones ">
+        <%
+        var i = 0;
+        var tmp = {};
+
+            <div class="col-lg-3">
+                <div class="search-min-height">
+                    <img class="img-responsive center" src="<%= value.PathLogo ? "https://tdushots.blob.core.windows.net"+value.PathLogo : "img/icon/00.jpg" %>">
+                </div>
+                <div>
+                    <p class="map-store-name"><%=value.sComercio%></p>
+                    <p class="map-store-type"><%=value.Giro.sGiro%></p>
+                    <p class="map-search-more linkstyle" data-store="<%= value.Beneficio.IdBeneficio %>">Ver Mas</p>
+                </div>
+            </div>
+
+            <%
+            var it;
+            if((i+1) % 4 == 0 ){
+                it = [0, 1, 3, 4];
+            }
+            $.each(it, function( j, obj ) {
+                var aux;
+                if(j == 3){
+                    aux =  value;
+                }else{
+                    aux = tmp[j];
+                }
+                %>
+                <% var paginaWeb = '#';
+                if (aux.PaginaWeb) {
+                  if (aux.PaginaWeb.includes('http', 0)) {
+                    paginaWeb = aux.PaginaWeb;
+                  }else{
+                    paginaWeb = 'http://' + aux.PaginaWeb;
+                  }
+                } %>
+                <div class="col-md-12 col-sm-12 col-xs-12 backstyle more-info <%= aux.Beneficio.IdBeneficio %> text-left">
+                    <div class="col-md-12 col-sm-12 col-xs-12 web-container text-center">
+                        <%=aux.sComercio%>
+                     </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 web-container text-center">
+                        <a href="<%=paginaWeb%>" class="store-web" target="_blank"><%=paginaWeb%></a>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 discount-container">
+                        <p><%= aux.Beneficio.Efectivo ? (parseFloat(aux.Beneficio.Efectivo*100).toFixed(2))+ "% en efectivo" : '' %> </p>
+                        <p><%= aux.Beneficio.TC ? (parseFloat(aux.Beneficio.TC*100).toFixed(2))+ "% en tarjeta" : '' %></p>
+                    </div>
+                    <% if(aux.Beneficio.Descripcion){%>
+                    <div class="col-md-12 col-sm-12 col-xs-12 restriction-container">
+                        <p>DESCRIPCION</p>
+                        <p><%= aux.Beneficio.Descripcion %></p>
+                    </div>
+                    <% } %>
+                    <% if(aux.Beneficio.Restricciones){%>
+                    <div class="col-md-12 col-sm-12 col-xs-12 restriction-container">
+                        <p>TÉRMINOS</p>
+                        <p><%= aux.Beneficio.Restricciones %></p>
+                    </div>
+                    <% } %>
+                    <div class="col-md-12 col-sm-12 col-xs-12 location-container2"
+                         data-targetlat="19.4145763" data-targetlng="-99.1724546"
+                         data-beneficio="<%= aux.Beneficio.IdBeneficio %>"
+                         data-img="<%= (aux.PathLogo ? 'https://tdushots.blob.core.windows.net'+aux.PathLogo : 'img/icon/00.jpg') %>"
+                         data-title="<%= aux.sComercio %>"
+                         data-web="<%=paginaWeb%>">
+                        <% //sucursales[aux.Beneficio.IdBeneficio] = aux; %>
+                        <span class="linkstyle">Ubicar Sucursales</span>
+                    </div>
+
+                </div>
+            <%
+            });
+
+            tmp[i % 4] = value;
+            i++;
+
+        });
+
+        %>
+    </div>
+</div>

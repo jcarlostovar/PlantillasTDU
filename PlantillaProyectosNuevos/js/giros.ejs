@@ -1,0 +1,118 @@
+
+<%
+
+if(Object.keys(giros).length === 0){
+%>
+<div class="col-md-12 col-xs-12">
+    <div class="msg-vacio">
+        <p>Lo sentimos, no encontramos ningún resultado.</p>
+    </div>
+</div>
+<%
+}else{
+    var ii=0;
+$.each(giros, function( index, value ) {
+    var clase="";
+    if(++ii > 2){ clase="shot"}
+    var beneficios = _(value).groupBy(function(o) {
+        return o.Beneficio.IdBeneficio;
+    });
+
+%>
+<div class="col-md-6 col-xs-12 contacto-column contacto-main <%=clase%>">
+    <div class="contact-content fidein-resultado">
+        <div class="main-banner-container">
+            <div class="banner-img">
+                <img src="img/s-<%= (index.toLowerCase().replace(/ /g, '_')) %>.jpg" class="img-responsive center" alt="" />
+            </div>
+            <div class="banner-ico">
+                <img src="img/universitaria/ico-<%= (index.toLowerCase().replace(/ /g, '_')) %>.png" class="img-responsive center" alt="" />
+            </div>
+            <h3 class="card-title"><%= index %></h3>
+        </div><!-- main-banner-container -->
+        <div class="column-main-container contact-center">
+            <div class="row search-item-container">
+                <%
+                    var tmp;
+                    var i = 0;
+                $.each(beneficios, function( index2, beneficio ) {
+                    aux =  beneficio;
+                %>
+                <div class="panel-flip" data-store="<%= beneficio[0].Beneficio.IdBeneficio %>">
+                    <!--LADO FRONT-->
+                    <div class="front">
+                        <!--<div class="search-min-height">
+                            <img src="<%= (beneficio[0].PathLogo ? 'https://tdushots.blob.core.windows.net'+beneficio[0].PathLogo : 'img/icon/00.jpg') %>" class="img-responsive center" alt="" />-->
+                            <div style='margin:auto; background: #fff url("<%= (beneficio[0].PathLogo ? 'https://tdushots.blob.core.windows.net'+beneficio[0].PathLogo : 'img/icon/00.jpg') %>") no-repeat scroll center center; background-size:contain; width: 140px; height: 120px;'>
+                        <!--</div>-->
+                        </div>
+                        <div class="search-min-height-txt">
+                            <p class="map-store-name"><%= beneficio[0].sComercio %></p>
+                        </div>
+
+                        <%
+                            var datosPercent = formatNumber (aux[0].Beneficio.Efectivo, "% en efectivo ", aux[0].Beneficio.TC, "% en TC " );
+                        %>
+
+                        <div class="discount-container">
+                            <div><%= datosPercent.efectivo %></div>
+                            <div><%= datosPercent.tarjeta %></div>
+                            <div><%= datosPercent.promocion %></div>
+                            <p class="action-flip map-store-more linkstyle" data-store="<%= beneficio[0].Beneficio.IdBeneficio %>">Conoce más <img src="img/flecha-derecha.png"></p>
+                        </div>
+                    </div>
+                    <!-- LADO BACK -->
+                    <!-- EVALUAR PÁGINA WEB -->
+                    <% var paginaWeb = '#';
+                    if (aux[0].PaginaWeb) {
+                      if (aux[0].PaginaWeb.includes('http', 0)) {
+                        paginaWeb = aux[0].PaginaWeb;
+                      }else{
+                        paginaWeb = 'http://' + aux[0].PaginaWeb;
+                      }
+                    } %>
+                    <div id="flip-back1" class="back"  data-store="<%= beneficio[0].Beneficio.IdBeneficio %>">
+                        <div class="backstyle text-left more-info <%= aux[0].Beneficio.IdBeneficio %>">
+                            <div class="web-container text-center">
+                                <a href="<%=paginaWeb%>" class="store-web" target="_blank">
+                                    <p class="word-wrap"><%= paginaWeb %></p>
+                                </a>
+                            </div>
+
+                            <% if(aux[0].Beneficio.Descripcion){%>
+                            <div class="restriction-container">
+                                <p>DESCRIPCION</p>
+                                <p><%= aux[0].Beneficio.Descripcion %></p>
+                            </div>
+                            <% } %>
+                            <% if(aux[0].Beneficio.Restricciones){%>
+                            <div class="restriction-container">
+                                <p>TÉRMINOS</p>
+                                <p><%= aux[0].Beneficio.Restricciones %></p>
+                            </div>
+                            <% } %>
+                            <div class="location-container"
+                                 data-beneficio="<%= aux[0].Beneficio.IdBeneficio %>"
+                                 data-img="<%= (aux[0].PathLogo ? 'https://tdushots.blob.core.windows.net'+aux[0].PathLogo : 'img/icon/00.jpg') %>"
+                                 data-title="<%= aux[0].sComercio %>"
+                                 data-web="<%= paginaWeb %>">
+                                <% //sucursales[aux[0].Beneficio.IdBeneficio] = aux; %>
+                                <span class="linkstyle">Ubicar Sucursales</span>
+                            </div>
+
+                            <p data-store="<%= beneficio[0].Beneficio.IdBeneficio %>" class="detalle-back flechas-back"><<</p>
+                        </div>
+                    </div>
+                </div>
+
+                <%
+                });
+                %>
+            </div>
+        </div><!-- column-main-container -->
+
+    </div><!-- contact-content -->
+</div><!-- contacto-column -->
+<% });
+}
+%>

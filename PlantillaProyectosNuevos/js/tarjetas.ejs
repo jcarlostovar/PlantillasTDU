@@ -1,0 +1,22 @@
+<ul>
+    <%
+        $.each(tarjetas, function( index, value ) {
+            %>
+            <li>
+                <div><%= value.sProductoWeb %></div>
+                <img src="img/tarjeta<%= value.IdProductoWeb %>.png" title="<%= value.sProductoWeb %>" alt="<%= value.sProductoWeb %>" /><br>
+                <!--<input data-tarjeta-id="<%= value.IdProductoWeb %>" type="checkbox" name="IdProductoWeb" value="<%= value.IdProductoWeb %>"><br>-->
+                <select id="<%= value.IdProductoWeb %>" class="numt" data-tarjeta-precio="<%= value.Precio %>" >
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <div>$ <%= value.Precio %> </div>
+            </li>
+            <%
+        });
+    %>
+</ul>

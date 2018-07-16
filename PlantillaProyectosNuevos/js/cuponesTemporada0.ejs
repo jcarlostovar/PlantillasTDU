@@ -1,0 +1,86 @@
+<%
+var email = '';
+var baseUrl = 'https://tdushots.blob.core.windows.net';
+$.each(cupones, function( index, value ) {
+    var idpublicacion = value.IdPublicacionEspecialDisplay;
+    var srcCelda = '';
+    var srcDetalle = '';
+    var srcTerms = 'sin';
+    var srcImpresion = '';
+    $.each(value.Imagenes, function ( indexImage, valueImage ){
+      if (valueImage.KeyImagen === "Celda"){
+        srcCelda = baseUrl + valueImage.PathImagen;
+      }else if (valueImage.KeyImagen === "Detalle"){
+        srcDetalle = baseUrl + valueImage.PathImagen;
+      }else if (valueImage.KeyImagen === "Reverso"){
+        srcTerms = baseUrl + valueImage.PathImagen;
+      }else if (valueImage.KeyImagen === "Impresion"){
+        srcImpresion = baseUrl + valueImage.PathImagen;
+      }
+    });
+%>
+<div class="item-promocion-container">
+    <a href="#" data-toggle="modal" data-target="#myModal<%= value.Beneficio.Beneficio.IdBeneficio %>">
+        <img src="<%= srcCelda %>" class="img-responsive center" alt=""/>
+    </a>
+</div>
+<!-- Modal -->
+<div class="modal fade modalPromociones" data-modal-id="<%= index %>" id="myModal<%= value.Beneficio.Beneficio.IdBeneficio %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+           <div class="col-lg-12">
+              <button type="button" id="close-cupon" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+           </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12 p-top">
+            <img src="<%= srcDetalle %>" class="img-responsive center" alt=""/>
+          </div>
+        </div>
+        <div class="row">
+        <%
+        if (srcTerms === 'sin'){
+          %>
+          <div class="col-lg-12 p-top txt-center txt-normal">
+            <div class="font12"><%= value.Beneficio.Beneficio.Restricciones %></div>
+          </div>
+          <%
+        } else{ %>
+          <div class="col-lg-12 p-top">
+            <img src="<%= srcTerms %>" class="img-responsive center" alt=""/>
+          </div> <%
+        }%>
+        </div>
+        <div class="row">
+          <div class="col-lg-<%= (srcImpresion == '' ? 12: 8)%> p-top txt-center txt-normal">
+          <% if (value.SendEmail == true) {%>
+            <div class="search-container">
+              <label for="Email_Cupon">Recibe esta promoción en tu correo: </label>
+              <input type="email" id="Email_Cupon" onkeyup="valid_email($(this).val());" autocomplete="off" placeholder="">
+              <input type="hidden" id="Id_Cupon" value="<%=idpublicacion%>">
+              <button id="submit-coupon" onclick="send_coupon(<%=idpublicacion%>);">Enviar</button>
+            </div>
+            <div class="g-recaptcha" id="html_element<%= index %>" data-sitekey="" ></div>
+          <%
+        } else{ %>
+          <div class="g-recaptcha" id="html_element<%= index %>" hidden="hidden" data-sitekey="" ></div>
+        <%}%>
+          </div>
+          <% if (srcImpresion != '') {%>
+          <div class="col-lg-4 p-top txt-center">
+            <a class="icon-btn" href="<%= srcImpresion %>" target="_blank">
+              <img src="img/impresion.png"> Descargar</a>
+            </div>
+          <%} %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%
+
+
+});
+%>

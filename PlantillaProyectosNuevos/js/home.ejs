@@ -1,0 +1,37 @@
+<%
+var i= 0;
+var latitude = (position && position.coords && position.coords.latitude) ? position.coords.latitude : "";
+var longitude = (position && position.coords && position.coords.longitude) ? position.coords.longitude : "";
+ $.each(comercios, function( index, value ) {
+
+    isActive = "";
+
+    if(i == 0){
+        isActive = "active"
+    }
+
+    if(i % 4 == 0 && i != 0){
+        %>
+            </div>
+            </div>
+        <%
+    }
+
+    if(i % 4 == 0){
+        %>
+        <div class='item <%=isActive%>'>
+            <div class='row'>
+        <%
+    }
+
+        %>
+        <div class="col-xs-3">
+            <a href="./descuentos.html?q=<%=value.sComercio%>&latitude=<%= latitude %>&longitude=<%= longitude %>">
+                <img src="<%= (value.PathLogo ? 'https://tdushots.blob.core.windows.net'+ value.PathLogo : 'img/icon/00.jpg') %>"
+                     alt="Image" class="img-responsive">
+            </a>
+        </div>
+        <%
+    i++;
+ });
+ %>
