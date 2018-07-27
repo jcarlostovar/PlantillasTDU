@@ -159,3 +159,17 @@ $(document).ready(function(){
     });
     /*FIN EFECTO FLIP*/
 });
+
+// EFECTO PARLLA
+
+$(document).ready(function(){
+
+  $(window).scroll(function(){
+    var barra = $(window).scrollTop();
+    var posicion = barra * 0.10;
+
+    $('como-funciona').css({
+      'background-position': '0 -' + position + 'px'
+    });
+  });
+});

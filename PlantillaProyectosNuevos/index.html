@@ -65,9 +65,22 @@
   <!-- /* Fin Script recapcha GOOGLE */ -->
 </head>
 
+<!-- javascript de menu  -->
+<script type="text/javascript">
+  var nav = document.getElementById('nav')
+  window.onscroll = function() {
+    if (window.pageYOffset > 100) {
+      document.getElementById("nav").style.backgroundColor = "rgba(0, 0, 0, .7)";
+    } else {
+      document.getElementById("nav").style.backgroundColor = "transparent";
+    }
+  }
+</script>
+<!-- fin de javascript de menu -->
+
 <div class="header">
 
-  <div class="navbar">
+  <div class="navbar" id="nav">
     <ul>
       <li>Como Funciona</li>
       <li>Nuestras Tarjetas</li>
@@ -75,7 +88,6 @@
       <li>Beneficios Especiales</li>
       <li>Dudas y Preguntas</li>
       <li>Escribenos Ahora</li>
-      <li>Ventas Corporativas</li>
     </ul>
   </div>
 </div>
@@ -111,14 +123,14 @@
       <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
         <img src="img/ico-varios.png" alt=""> Y mucho más...
       </div>
-  </div>
-  <div class="cont-como-funciona col-lg-6 col-md-6 col-sm-6 col-xs-6">
+    </div>
+    <div class="cont-como-fun col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <p>Consulta toda la red de TDU descargando nuestra app en tu móvil, o bien en el catálogo que recibirás al adquirirla.</p>
       <p>Solo presenta tu Tarjeta al momento de solicitar tu cuenta, nota o factura.</p>
-      <p>Si tienes dudas podrás llamar a la Línea TDU: (55) 55.75.95.56.</p>
+      <p>Si tienes dudas podrás llamar a la Línea TDU: <a href="tel:55759556">(55) 55.75.95.56.</a></p>
       <p>Todos nuestros descuentos están respaldados por su respectivo contrato.</p>
-  </div>
-  <h2 class="cont-como-funciona col-lg-8 col-md-8 col-sm-8 col-xs-8">¡Empieza a disfrutar de estos beneficios, es muy fácil!</h2>
+    </div>
+    <h2 class="cont-como-fun col-lg-12 col-md-12 col-sm-12 col-xs-12">¡Empieza a disfrutar de estos beneficios, es muy fácil!</h2>
   </div>
 </div>
 
